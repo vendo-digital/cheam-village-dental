@@ -1760,8 +1760,12 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
   /* iOS Safari's collapsing address bar fires resize events that don't
      reflect a real layout change; without this, ScrollTrigger recalculates
      pinned sections (the hero expand) against a stale viewport height and
-     leaves a gap above the pinned image after scrolling. */
+     leaves a gap above the pinned image after scrolling. normalizeScroll
+     goes a step further and stops the address bar from resizing the
+     viewport mid-scroll in the first place — ignoreMobileResize alone
+     wasn't enough to fully prevent the gap on a real device. */
   ScrollTrigger.config({ ignoreMobileResize:true });
+  ScrollTrigger.normalizeScroll(true);
 
   /* ---------- smooth scroll ---------- */
   var lenis = null;
