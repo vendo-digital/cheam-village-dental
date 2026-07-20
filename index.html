@@ -259,6 +259,8 @@ body.menu-open .burger span:nth-child(3){transform:translateY(-7.5px) rotate(-45
 .expand-title .xl>span{display:block}
 .expand-foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-top:6px}
 .expand-tags{display:flex;gap:clamp(14px,2.5vw,30px);font-size:10.5px;letter-spacing:.05em;text-transform:none;opacity:.85;flex-wrap:wrap}
+.expand-tags .tag-lead{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-weight:600;letter-spacing:.06em;opacity:1}
+.expand-tags .tag-lead::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex:none}
 
 /* header over dark expanded hero */
 header.on-dark{background:transparent;border-color:transparent;backdrop-filter:none}
@@ -1065,7 +1067,7 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
           <span class="xl"><span><em>quietly</em> transformed.</span></span>
         </h2>
         <div class="expand-foot">
-          <div class="expand-tags"><span>General dentistry</span><span>Teeth straightening</span><span>Implants</span><span>Whitening</span><span>Facial aesthetics</span></div>
+          <div class="expand-tags"><span class="tag-lead">GDC Specialist in Orthodontics</span><span>General dentistry</span><span>Teeth straightening</span><span>Implants</span><span>Whitening</span><span>Facial aesthetics</span></div>
           <a class="btn-pill light" href="#book">
             <span>Book an appointment</span>
             <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1 11 L11 1 M3 1h8v8" stroke="currentColor" stroke-width="1.4"/></svg>
