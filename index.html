@@ -556,9 +556,24 @@ header.on-dark .burger span{background:var(--porcelain)}
   display:flex;justify-content:center;
 }
 .gallery.static .gal-cta{position:static;margin:0}
+.gal-grid-wrap{position:relative}
+.gal-nav-btn{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  width:44px;height:44px;border-radius:50%;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(245,246,245,.42);background:rgba(23,20,17,.35);backdrop-filter:blur(4px);
+  color:var(--porcelain);cursor:pointer;
+  transition:background .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),opacity .3s;
+}
+.gal-nav-btn:hover{background:var(--porcelain);color:var(--ink);border-color:var(--porcelain)}
+.gal-nav-btn svg{width:13px;height:13px}
+.gal-nav-prev{left:clamp(4px,1.4vw,18px)}
+.gal-nav-next{right:clamp(4px,1.4vw,18px)}
+.gal-nav-btn[disabled]{opacity:.22;pointer-events:none}
 @media(max-width:760px){
   .gallery.static .gal-grid{grid-template-columns:1fr;gap:18px}
   .gallery-top{flex-direction:column;align-items:flex-start;gap:14px}
+  .gal-nav-btn{display:none}
 }
 
 /* ============ PERSISTENT CONTACT FAB ============ */
@@ -1262,7 +1277,15 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
         <p class="gal-sub">Before, and after. Real smiles, quietly transformed in the studios.</p>
       </div>
     </div>
-    <div class="gal-grid" id="galGrid" aria-hidden="true"></div>
+    <div class="gal-grid-wrap">
+      <button class="gal-nav-btn gal-nav-prev" id="galPrev" type="button" aria-label="Scroll to previous smile">
+        <svg viewBox="0 0 12 12" fill="none"><path d="M8 1 3 6l5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+      </button>
+      <div class="gal-grid" id="galGrid" aria-hidden="true"></div>
+      <button class="gal-nav-btn gal-nav-next" id="galNext" type="button" aria-label="Scroll to next smile">
+        <svg viewBox="0 0 12 12" fill="none"><path d="M4 1 9 6l-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+      </button>
+    </div>
     <div class="gal-foot" data-fade>
       <a class="gal-cta" href="#gallery"><span>Smile gallery</span><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1 11 L11 1 M3 1h8v8" stroke="currentColor" stroke-width="1.4"/></svg></a>
     </div>
@@ -1951,6 +1974,24 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
       gsap.fromTo(cards,{opacity:0,y:42},{opacity:1,y:0,duration:1,ease:'power3.out',stagger:.12,
         scrollTrigger:{trigger:grid,start:'top 84%'}});
     }
+    /* click-to-scroll nav arrows */
+    var prevBtn=document.getElementById('galPrev'), nextBtn=document.getElementById('galNext');
+    function step(){
+      var card=grid.querySelector('.ba-card');
+      var gap=parseFloat(getComputedStyle(grid).columnGap)||24;
+      return card ? card.getBoundingClientRect().width+gap : 400;
+    }
+    function updateNav(){
+      if(!prevBtn||!nextBtn) return;
+      var max=grid.scrollWidth-grid.clientWidth-2;
+      prevBtn.disabled = grid.scrollLeft<=2;
+      nextBtn.disabled = max<=2 || grid.scrollLeft>=max;
+    }
+    if(prevBtn) prevBtn.addEventListener('click',function(){ grid.scrollBy({left:-step(),behavior:reduced?'auto':'smooth'}); });
+    if(nextBtn) nextBtn.addEventListener('click',function(){ grid.scrollBy({left:step(),behavior:reduced?'auto':'smooth'}); });
+    grid.addEventListener('scroll',updateNav);
+    window.addEventListener('resize',updateNav);
+    updateNav();
   })();
 
   /* ---------- testimonial rotator ---------- */
