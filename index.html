@@ -1757,6 +1757,11 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
 
   if(!window.gsap){ if(pre) pre.style.display='none'; return; }
   gsap.registerPlugin(ScrollTrigger);
+  /* iOS Safari's collapsing address bar fires resize events that don't
+     reflect a real layout change; without this, ScrollTrigger recalculates
+     pinned sections (the hero expand) against a stale viewport height and
+     leaves a gap above the pinned image after scrolling. */
+  ScrollTrigger.config({ ignoreMobileResize:true });
 
   /* ---------- smooth scroll ---------- */
   var lenis = null;
