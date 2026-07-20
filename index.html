@@ -891,7 +891,14 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
   .hero-visual{order:-1;margin-top:18px}
   .arch-wrap{max-width:min(70vw,360px);margin-inline:auto}
   .hero-arch{aspect-ratio:4/4.4}
-  .badge-rotor{left:auto;right:-34px;bottom:-26px;width:118px;height:118px}
+  .hero-visual .badge-rotor{
+    display:grid;place-items:center;position:absolute;
+    top:-18px;right:-18px;left:auto;bottom:auto;
+    width:110px;height:110px;
+    background:var(--porcelain);border-radius:50%;
+    box-shadow:0 16px 50px -18px rgba(23,20,17,.32);
+    z-index:4;
+  }
   .slide-nav{justify-content:center;gap:20px;margin:46px auto 0;max-width:none}
   .scroll-hint{display:none}
   .hero-grid{padding-bottom:56px}
