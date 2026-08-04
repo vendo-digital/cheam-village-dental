@@ -125,6 +125,19 @@ header.hidden{transform:translateY(-100%)}
   transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease);
 }
 .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-dropdown{
+  position:absolute;top:100%;left:0;padding-top:22px;
+  opacity:0;visibility:hidden;transform:translateY(-6px);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .3s var(--ease),visibility .3s;
+}
+.nav-item:hover .nav-dropdown{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+.nav-dropdown a{
+  display:block;white-space:nowrap;font-size:13px;letter-spacing:.04em;font-weight:500;
+  background:rgba(245,246,245,.96);backdrop-filter:blur(14px);border:1px solid var(--line);
+  border-radius:10px;padding:12px 22px;box-shadow:0 12px 30px rgba(23,20,17,.1);color:var(--ink);
+}
+header.on-dark .nav-links .nav-dropdown a{color:var(--ink)}
 .nav-cta{
   font-size:12px;letter-spacing:.04em;text-transform:none;font-weight:600;
   border:1px solid var(--ink);border-radius:999px;padding:13px 26px;
@@ -160,6 +173,7 @@ body.menu-open .burger span:nth-child(3){transform:translateY(-7.5px) rotate(-45
   display:flex;align-items:baseline;gap:18px;width:fit-content;
 }
 #menu a.menu-link i{font-style:normal;font-family:var(--sans);font-size:12px;letter-spacing:.3em;opacity:.45}
+#menu a.menu-link.sub{font-family:var(--sans);font-weight:500;font-size:clamp(16px,2.6vw,20px);letter-spacing:.02em;opacity:.6;margin:2px 0 10px 42px}
 #menu .menu-foot{margin-top:48px;font-size:12px;letter-spacing:.04em;text-transform:none;opacity:.6;line-height:2.2}
 
 /* ============ HERO ============ */
@@ -1078,10 +1092,15 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
 </defs></svg>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#studio">Studio</a>
+      <div class="nav-item">
+        <a href="#studio">Studio</a>
+        <div class="nav-dropdown">
+          <a href="#gallery">Gallery</a>
+        </div>
+      </div>
       <a href="#treatments">Treatments</a>
       <a href="#approach">Approach</a>
-      <a href="#gallery">Gallery</a>
+      <a href="#">Fees</a>
       <a href="#voices">Reviews</a>
       <a href="#visit">Contact us</a>
     </nav>
@@ -1099,9 +1118,10 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
 <div id="menu" aria-hidden="true">
   <nav>
     <a class="menu-link" href="#studio"><i>01</i>Studio</a>
+    <a class="menu-link sub" href="#gallery">Gallery</a>
     <a class="menu-link" href="#treatments"><i>02</i>Treatments</a>
     <a class="menu-link" href="#approach"><i>03</i>Approach</a>
-    <a class="menu-link" href="#gallery"><i>04</i>Gallery</a>
+    <a class="menu-link" href="#"><i>04</i>Fees</a>
     <a class="menu-link" href="#voices"><i>05</i>Reviews</a>
     <a class="menu-link" href="#visit"><i>06</i>Contact us</a>
   </nav>
