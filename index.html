@@ -2077,7 +2077,7 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
   /* ---------- process wheel dial ---------- */
   var processSec = document.querySelector('.process');
   var wheelStage = document.getElementById('wheelStage');
-  if(!reduced && wheelStage && processSec){
+  if(!reduced && innerWidth>=700 && wheelStage && processSec){
     processSec.classList.add('wheel-mode');
     var wheelEl = document.getElementById('wheel');
     var wticksWrap = document.getElementById('wticks');
