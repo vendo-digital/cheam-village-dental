@@ -1341,12 +1341,12 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
   <section class="journey">
     <div class="wrap journey-grid">
       <div class="journey-left">
-        <h2 class="h-display" data-lines>A patient journey, unhurried from the very first hello.</h2>
+        <h2 class="h-display" data-lines>Why patients choose <em>Cheam Village</em>.</h2>
         <p data-fade>From your first message to the final reveal, every step is paced around you: a warm welcome, honest advice, and time to ask every question before any treatment begins.</p>
       </div>
       <div class="journey-right">
         <div class="journey-video-wrap" id="journeyVideoWrap">
-          <video id="journeyVideo" poster="images/hero-studio.jpg" playsinline preload="metadata">
+          <video id="journeyVideo" poster="images/hero-studio.jpg" playsinline muted loop preload="metadata">
             <source src="videos/patient-journey.mp4" type="video/mp4">
           </video>
           <button class="journey-play" id="journeyPlay" aria-label="Play the patient journey video">
@@ -2084,13 +2084,38 @@ footer{border-top:1px solid var(--line-light);background:var(--deep-ground);colo
     var vid = document.getElementById('journeyVideo');
     var play = document.getElementById('journeyPlay');
     if(!wrap || !vid || !play) return;
+    var opened = false;
+
+    /* silent looping preview while the video is in view */
+    ScrollTrigger.create({
+      trigger:wrap, start:'top 85%', end:'bottom 15%',
+      onEnter:function(){ vid.play().catch(function(){}); },
+      onEnterBack:function(){ vid.play().catch(function(){}); },
+      onLeave:function(){ vid.pause(); },
+      onLeaveBack:function(){ vid.pause(); }
+    });
+
+    /* pressing play opens the full video with sound, from the start */
     play.addEventListener('click',function(){
+      opened = true;
+      vid.loop = false;
+      vid.muted = false;
+      vid.currentTime = 0;
       vid.setAttribute('controls','');
       wrap.classList.add('playing');
       vid.play();
     });
-    vid.addEventListener('pause',function(){ wrap.classList.remove('playing'); });
-    vid.addEventListener('play',function(){ wrap.classList.add('playing'); });
+    vid.addEventListener('pause',function(){ if(opened) wrap.classList.remove('playing'); });
+    vid.addEventListener('play',function(){ if(opened) wrap.classList.add('playing'); });
+    vid.addEventListener('ended',function(){
+      opened = false;
+      vid.muted = true;
+      vid.loop = true;
+      vid.removeAttribute('controls');
+      wrap.classList.remove('playing');
+      vid.currentTime = 0;
+      vid.play().catch(function(){});
+    });
   })();
 
   /* parallax images */
